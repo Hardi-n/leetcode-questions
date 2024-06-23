@@ -77,6 +77,7 @@ class Solution {
 }
 
 /*
+added git config --global user.email "subhgyachhabra18718@gmail.com"
  * Approach
  * 1.Start with the First Term: Initialize the sequence with "1".
  * 2.Generate Each Term: Use a loop to generate each term from the previous term
