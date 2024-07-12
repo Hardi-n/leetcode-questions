@@ -41,92 +41,42 @@ s consists of lowercase English letters.
 
  class Solution {
     public int maximumGain(String s, int x, int y) {
-        // Decide the order of removal based on scores
         if (x < y) {
-            // return maximumGainHelper(s, 'b', 'a', y) + maximumGainHelper(s, 'a', 'b', x);
-            Stack<Character> stack = new Stack<>();
-            int totalScore = 0;
-            int score = y;
-            for (char c : s.toCharArray()) {
-                if (!stack.isEmpty() && stack.peek() == 'b' && c == 'a') {
-                    stack.pop();
-                    totalScore += score;
-                } else {
-                    stack.push(c);
-                }
-            }
-
-            // Process the remaining characters to form the remaining string
-            StringBuilder remaining = new StringBuilder();
-            while (!stack.isEmpty()) {
-                remaining.append(stack.pop());
-            }
-            remaining.reverse();
-
-            String remainingstr= remaining.toString();
-            Stack<Character> stackk = new Stack<>();
-            score = x;
-            for (char c : remainingstr.toCharArray()) {
-                if (!stackk.isEmpty() && stackk.peek() == 'a' && c == 'b') {
-                    stackk.pop();
-                    totalScore += score;
-                } else {
-                    stackk.push(c);
-                }
-            }
-
-            // Process the remaining characters to form the remaining string
-            StringBuilder remainingg = new StringBuilder();
-            while (!stackk.isEmpty()) {
-                remainingg.append(stackk.pop());
-            }
-            remainingg.reverse();
-            return totalScore;
-
+            return processString(s, 'b', 'a', y) + processString(processStringResult, 'a', 'b', x);
         } else {
-            // return maximumGainHelper(s, 'a', 'b', x) + maximumGainHelper(s, 'b', 'a', y);
-            Stack<Character> stack = new Stack<>();
-            int totalScore = 0;
-            int score = x;
-            for (char c : s.toCharArray()) {
-                if (!stack.isEmpty() && stack.peek() == 'a' && c == 'b') {
-                    stack.pop();
-                    totalScore += score;
-                } else {
-                    stack.push(c);
-                }
-            }
-
-            // Process the remaining characters to form the remaining string
-            StringBuilder remaining = new StringBuilder();
-            while (!stack.isEmpty()) {
-                remaining.append(stack.pop());
-            }
-            remaining.reverse();
-
-            String remainingstr= remaining.toString();
-            Stack<Character> stackk = new Stack<>();
-            score = y;
-            for (char c : remainingstr.toCharArray()) {
-                if (!stackk.isEmpty() && stackk.peek() == 'b' && c == 'a') {
-                    stack.pop();
-                    totalScore += score;
-                } else {
-                    stackk.push(c);
-                }
-            }
-
-            // Process the remaining characters to form the remaining string
-            StringBuilder remainingg = new StringBuilder();
-            while (!stackk.isEmpty()) {
-                remainingg.append(stackk.pop());
-            }
-            remainingg.reverse();
-            return totalScore;
+            return processString(s, 'a', 'b', x) + processString(processStringResult, 'b', 'a', y);
         }
     }
 
+    private String processStringResult = "";
+
+    private int processString(String s, char first, char second, int score) {
+        Stack<Character> stack = new Stack<>();
+        int totalScore = 0;
+
+        for (char c : s.toCharArray()) {
+            if (!stack.isEmpty() && stack.peek() == first && c == second) {
+                stack.pop();
+                totalScore += score;
+            } else {
+                stack.push(c);
+            }
+        }
+
+        // Process the remaining characters to form the remaining string
+        StringBuilder remaining = new StringBuilder();
+        while (!stack.isEmpty()) {
+            remaining.append(stack.pop());
+        }
+        remaining.reverse();
+
+        processStringResult = remaining.toString();
+        return totalScore;
+    }
+
+    
 }
+
 
 
 
