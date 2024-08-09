@@ -49,3 +49,34 @@ The only space character in s is ' '.
  * 1. split the string into array using split(" ")
  * 2. return the size of the array
  */
+
+
+
+
+ /*updated code-------------->>>>>>>>>>>>>>>>>>>>>>>>>>*/
+ class Solution {
+    public int countSegments(String s) {
+        // Trim the string to remove leading and trailing spaces
+        // Use a regular expression to split on one or more spaces
+        String arr[] = s.trim().split("\\s+");
+
+        // If the string is empty after trimming, return 0
+        if (s.trim().isEmpty()) {
+            return 0;
+        }
+
+        return arr.length;
+    }
+}
+
+
+
+
+
+/*
+ * 
+ * Approach
+ * 1. use trim for the extra spaces on both ends
+ * 2. split(" ")
+ * 3. return size of array using array.length;
+ */
