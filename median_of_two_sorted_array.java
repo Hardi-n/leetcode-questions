@@ -80,3 +80,39 @@
  * 2. create a new array of that hashset and sort it using Arrays.sort()
  * 3. Find median using n%2==0 then (arr[n/2-1] + arr[n/2+1])/2 or else arr[n/2]
  */
+
+
+ /*updated code -------------------->>>>>>>>>>>>>>>>>>> */
+ class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int[] mergedArray = new int[n1 + n2];
+        
+        // Merge the two arrays
+        for(int i=0;i<n1;i++){
+            mergedArray[i]=nums1[i];
+        }
+        for(int i=0 ;i<n2;i++){
+            mergedArray[n1+i]=nums2[i];
+        }
+        
+        // Sort the merged array
+        Arrays.sort(mergedArray);
+        
+        // Calculate the median
+        int totalLength = mergedArray.length;
+        if (totalLength % 2 == 0) {
+            return (mergedArray[totalLength/2 - 1] + mergedArray[totalLength/2]) / 2.0;
+        } else {
+            return mergedArray[totalLength/2];
+        }
+    }
+}
+
+
+/*
+ * 
+ * Approach used is without hashmap 
+ * 1. because single array can have duplicate elements which will eventually change the median
+ */
