@@ -35,8 +35,7 @@
  * 0 <= prices[i] <= 104
  */
 
-
- class Solution {
+class Solution {
     public int maxProfit(int[] prices) {
         // Check if the prices array is null or has less than 2 elements
         // In such cases, it's impossible to make any profit, so return 0
@@ -46,7 +45,7 @@
 
         // Initialize the lowest price as the first element in the array
         int lowest = prices[0];
-        int index_of_lowest = 0;  // Track the index of the lowest price
+        int index_of_lowest = 0; // Track the index of the lowest price
 
         // Iterate through the prices array starting from the second element
         for (int i = 1; i < prices.length; i++) {
@@ -55,7 +54,8 @@
                 lowest = prices[i];
                 index_of_lowest = i;
             }
-            // Else, keep the current lowest price (this else block can be removed as it's redundant)
+            // Else, keep the current lowest price (this else block can be removed as it's
+            // redundant)
             else {
                 lowest = lowest;
             }
@@ -63,7 +63,7 @@
 
         // Initialize the maximum price as the lowest price found
         int max = prices[index_of_lowest];
-        int index_of_max = index_of_lowest;  // Track the index of the maximum price
+        int index_of_max = index_of_lowest; // Track the index of the maximum price
 
         // Iterate through the array from the next element after the lowest price
         for (int i = index_of_lowest + 1; i < prices.length; i++) {
@@ -74,7 +74,8 @@
             }
         }
 
-        // If the lowest price is at or after the highest price, return 0 as no profit can be made
+        // If the lowest price is at or after the highest price, return 0 as no profit
+        // can be made
         if (index_of_lowest >= index_of_max) {
             return 0;
         }
@@ -84,91 +85,169 @@
     }
 }
 
-
 /*
  * Initial Check:
+ * 
+ * java
+ * Copy code
+ * if (prices == null || prices.length < 2) {
+ * return 0;
+ * }
+ * Purpose: This part checks if the prices array is null (i.e., not provided) or
+ * has less than 2 elements.
+ * Why: If the array is empty or contains only one price, it’s impossible to
+ * make a transaction, so the function returns 0 immediately.
+ * Finding the Lowest Price:
+ * 
+ * java
+ * Copy code
+ * int lowest = prices[0];
+ * int index_of_lowest = 0;
+ * Initialization: The first element of the array is assumed to be the lowest
+ * price initially, and index_of_lowest tracks its position.
+ * java
+ * Copy code
+ * for (int i = 1; i < prices.length; i++) {
+ * if (lowest > prices[i]) {
+ * lowest = prices[i];
+ * index_of_lowest = i;
+ * }
+ * }
+ * Purpose: This loop iterates through the array to find the lowest price.
+ * How: It compares each price with the current lowest. If a lower price is
+ * found, it updates lowest and the index_of_lowest.
+ * Result: After this loop, you know the lowest price and its position in the
+ * array.
+ * Finding the Maximum Price After the Lowest:
+ * 
+ * java
+ * Copy code
+ * int max = prices[index_of_lowest];
+ * int index_of_max = index_of_lowest;
+ * Initialization: The code sets max to the lowest price initially. It assumes
+ * that the highest price will come after the lowest price.
+ * java
+ * Copy code
+ * for (int i = index_of_lowest + 1; i < prices.length; i++) {
+ * if (max < prices[i]) {
+ * max = prices[i];
+ * index_of_max = i;
+ * }
+ * }
+ * Purpose: This loop searches for the maximum price that occurs after the
+ * lowest price.
+ * How: It compares each price after the lowest price and updates max if a
+ * higher price is found. The index of this maximum price is stored in
+ * index_of_max.
+ * Checking Profit Feasibility:
+ * 
+ * java
+ * Copy code
+ * if (index_of_lowest >= index_of_max) {
+ * return 0;
+ * }
+ * Purpose: This check ensures that the maximum price occurs after the lowest
+ * price.
+ * Why: If the maximum price is before or at the same index as the lowest price,
+ * no valid transaction (buying before selling) can be made, so the function
+ * returns 0.
+ * Return the Maximum Profit:
+ * 
+ * java
+ * Copy code
+ * return max - lowest;
+ * Purpose: This returns the difference between the maximum price and the lowest
+ * price, which represents the maximum profit you can achieve by buying at the
+ * lowest price and selling at the highest price after that.
+ * Example Walkthrough:
+ * For the input prices = [7, 1, 5, 3, 6, 4]:
+ * 
+ * Finding Lowest Price:
+ * 
+ * Start with lowest = 7.
+ * Iterate through the array:
+ * At index 1: lowest updates to 1.
+ * The lowest price is found at index 1.
+ * Finding Maximum Price After Lowest:
+ * 
+ * Start with max = 1 (price at index 1).
+ * Iterate through the array starting from index 2:
+ * At index 2: max updates to 5.
+ * At index 4: max updates to 6.
+ * The maximum price after the lowest price is 6.
+ * Calculate Profit:
+ * 
+ * Return max - lowest = 6 - 1 = 5.
+ * Thus, the maximum profit is 5.
+ * 
+ * Time Complexity:
+ * O(n): The code iterates through the prices array twice—once to find the
+ * lowest price and once to find the maximum price after the lowest. Therefore,
+ * the time complexity is linear with respect to the size of the array.
+ * Space Complexity:
+ * O(1): The code uses a constant amount of extra space for variables (lowest,
+ * index_of_lowest, max, index_of_max), making the space complexity constant.
+ * This code efficiently calculates the maximum profit from stock prices by
+ * identifying the best day to buy and the best day to sell within the given
+ * constraints.
+ */
 
-java
-Copy code
-if (prices == null || prices.length < 2) {
-    return 0;
-}
-Purpose: This part checks if the prices array is null (i.e., not provided) or has less than 2 elements.
-Why: If the array is empty or contains only one price, it’s impossible to make a transaction, so the function returns 0 immediately.
-Finding the Lowest Price:
+/*
+ * Updated code
+ * ---------------------------------------------------------------------------->
+ * >>>>>>>>>>>>>>>>>>>>>>>>>
+ */
 
-java
-Copy code
-int lowest = prices[0];
-int index_of_lowest = 0;
-Initialization: The first element of the array is assumed to be the lowest price initially, and index_of_lowest tracks its position.
-java
-Copy code
-for (int i = 1; i < prices.length; i++) {
-    if (lowest > prices[i]) {
-        lowest = prices[i];
-        index_of_lowest = i;
+class Solution {
+    public int maxProfit(int[] prices) {
+        // Handle the edge case where prices array is empty or has only one element
+        if (prices == null || prices.length < 2) {
+            return 0;
+        }
+
+        int lowest = prices[0];
+        int maxProfit = 0;
+
+        // Iterate through the array to find the maximum profit
+        for (int i = 1; i < prices.length; i++) {
+            // Calculate potential profit if selling at the current price
+            int potentialProfit = prices[i] - lowest;
+
+            // Update the maximum profit if the current potential profit is higher
+            maxProfit = Math.max(maxProfit, potentialProfit);
+
+            // Update the lowest price encountered so far
+            lowest = Math.min(lowest, prices[i]);
+        }
+
+        return maxProfit;
     }
 }
-Purpose: This loop iterates through the array to find the lowest price.
-How: It compares each price with the current lowest. If a lower price is found, it updates lowest and the index_of_lowest.
-Result: After this loop, you know the lowest price and its position in the array.
-Finding the Maximum Price After the Lowest:
 
-java
-Copy code
-int max = prices[index_of_lowest];
-int index_of_max = index_of_lowest;
-Initialization: The code sets max to the lowest price initially. It assumes that the highest price will come after the lowest price.
-java
-Copy code
-for (int i = index_of_lowest + 1; i < prices.length; i++) {
-    if (max < prices[i]) {
-        max = prices[i];
-        index_of_max = i;
-    }
-}
-Purpose: This loop searches for the maximum price that occurs after the lowest price.
-How: It compares each price after the lowest price and updates max if a higher price is found. The index of this maximum price is stored in index_of_max.
-Checking Profit Feasibility:
+/*
+ * Issues in the above code.:
+ * Initialization: The code assumes that the prices array has at least one
+ * element (prices[0]), but this isn't checked. If prices is empty, the code
+ * will throw an exception. A check for an empty array should be added.
+ * Redundant Statement: The line else { lowest = lowest; } is unnecessary and
+ * can be removed.
+ * Edge Case Handling: The logic will not correctly handle cases where the
+ * prices only decrease (e.g., [7, 6, 4, 3, 1]). Although the code attempts to
+ * handle this with the index_of_lowest >= index_of_max condition, it can be
+ * simplified by returning 0 directly when no profit can be made.
+ */
 
-java
-Copy code
-if (index_of_lowest >= index_of_max) {
-    return 0;
-}
-Purpose: This check ensures that the maximum price occurs after the lowest price.
-Why: If the maximum price is before or at the same index as the lowest price, no valid transaction (buying before selling) can be made, so the function returns 0.
-Return the Maximum Profit:
-
-java
-Copy code
-return max - lowest;
-Purpose: This returns the difference between the maximum price and the lowest price, which represents the maximum profit you can achieve by buying at the lowest price and selling at the highest price after that.
-Example Walkthrough:
-For the input prices = [7, 1, 5, 3, 6, 4]:
-
-Finding Lowest Price:
-
-Start with lowest = 7.
-Iterate through the array:
-At index 1: lowest updates to 1.
-The lowest price is found at index 1.
-Finding Maximum Price After Lowest:
-
-Start with max = 1 (price at index 1).
-Iterate through the array starting from index 2:
-At index 2: max updates to 5.
-At index 4: max updates to 6.
-The maximum price after the lowest price is 6.
-Calculate Profit:
-
-Return max - lowest = 6 - 1 = 5.
-Thus, the maximum profit is 5.
-
-Time Complexity:
-O(n): The code iterates through the prices array twice—once to find the lowest price and once to find the maximum price after the lowest. Therefore, the time complexity is linear with respect to the size of the array.
-Space Complexity:
-O(1): The code uses a constant amount of extra space for variables (lowest, index_of_lowest, max, index_of_max), making the space complexity constant.
-This code efficiently calculates the maximum profit from stock prices by identifying the best day to buy and the best day to sell within the given constraints.
+/*
+ * 
+ * 
+ * Explanation of Changes:
+ * Edge Case Check: Added a check at the beginning to return 0 if the prices
+ * array is empty or has fewer than 2 elements.
+ * Simplified Logic: Instead of maintaining separate loops and tracking the
+ * index of the lowest and highest prices, the code now calculates the maximum
+ * profit in a single pass. It iterates through the prices and continuously
+ * updates the lowest price and the maximum profit.
+ * Performance: The revised code runs in O(n) time complexity, where n is the
+ * length of the prices array.
+ * 
  */
