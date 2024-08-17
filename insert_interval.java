@@ -138,3 +138,72 @@ class Solution {
  * using System.arraycopy.
  * If no resizing is needed, the original result array is returned.
  */
+
+/* Updated code -------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        // Edge case: If intervals array is empty, return newInterval as the only
+        // interval
+        if (intervals == null || intervals.length == 0) {
+            return new int[][] { newInterval };
+        }
+
+        int n = intervals.length;
+        List<int[]> resultList = new ArrayList<>();
+
+        int i = 0;
+
+        // Add intervals that come before the new interval
+        while (i < n && intervals[i][1] < newInterval[0]) {
+            resultList.add(intervals[i++]);
+        }
+
+        // Merge overlapping intervals with the new interval
+        while (i < n && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+        resultList.add(newInterval); // Add the merged interval
+
+        // Add remaining intervals that come after the new interval
+        while (i < n) {
+            resultList.add(intervals[i++]);
+        }
+
+        // Convert the result list back to a 2D array
+        return resultList.toArray(new int[resultList.size()][]);
+    }
+}
+
+/*
+ * Explanation:
+ * Edge Case Handling:
+ * 
+ * If the input intervals array is empty, the function returns newInterval as
+ * the only interval.
+ * Result List:
+ * 
+ * A dynamic list (resultList) is used to store the merged intervals, which
+ * avoids potential sizing issues.
+ * First While Loop:
+ * 
+ * This loop adds intervals that end before the start of newInterval
+ * (non-overlapping intervals before newInterval).
+ * Second While Loop:
+ * 
+ * This loop merges overlapping intervals with newInterval. The start of
+ * newInterval is updated to the minimum start time of the overlapping
+ * intervals, and the end is updated to the maximum end time.
+ * Third While Loop:
+ * 
+ * This loop adds any remaining intervals that start after the newInterval ends.
+ * Final Conversion:
+ * 
+ * The resultList is converted back to a 2D array using toArray().
+ * Benefits of this Approach:
+ * Handles edge cases like empty intervals.
+ * Dynamically manages the size of the result array to avoid sizing errors.
+ * Makes use of the ArrayList for flexible array resizing and better runtime
+ * management.
+ */
