@@ -58,7 +58,7 @@ class Solution {
                 }
             }
         }
-        return dp[n];--
+        return dp[n];
     }
 }
 
