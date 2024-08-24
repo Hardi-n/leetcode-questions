@@ -39,7 +39,7 @@
 
 import java.util.HashMap;
 
-public class Solution {
+public class fraction_to_decimal {
     public String fractionToDecimal(int numerator, int denominator) {
         if (numerator == 0)
             return "0";
