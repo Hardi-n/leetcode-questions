@@ -23,28 +23,26 @@
  * 
  * 0 <= c <= 231 - 1
  */
-
 class Solution {
     public boolean judgeSquareSum(int c) {
-        int left = 0;
-        int right = (int) Math.sqrt(c); // start with the largest possible value for b
-
+        long left = 0;
+        long right = (long) Math.sqrt(c);  // start with the largest possible value for b
+        
         while (left <= right) {
-            int sum = left * left + right * right;
-
+            long sum = left * left + right * right;
+            
             if (sum == c) {
-                return true; // Found a and b such that a^2 + b^2 = c
+                return true;  // Found a and b such that a^2 + b^2 = c
             } else if (sum < c) {
-                left++; // Increase a to increase the sum
+                left++;  // Increase a to increase the sum
             } else {
-                right--; // Decrease b to decrease the sum
+                right--;  // Decrease b to decrease the sum
             }
         }
-
-        return false; // No such pair found
+        
+        return false;  // No such pair found
     }
-}
-
+}   
 /*
  * 
  * How the code works:
