@@ -67,7 +67,7 @@ class Solution {
             length++;
             current = current.next;
         }
-        if (length > 1) {
+        if (length >= 1) {
             ListNode prev, crr;
             prev = crr = head;
             crr = crr.next;
